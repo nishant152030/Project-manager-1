@@ -1,6 +1,25 @@
 # Project Management System
 
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![Built with .NET 8](https://img.shields.io/badge/.NET-8-blue.svg)](https://dotnet.microsoft.com/)
+[![Frontend: React + Vite](https://img.shields.io/badge/React-Vite-yellow.svg)](https://vitejs.dev/)
+
 A full-stack project and task management application with user authentication, built with .NET 8 and React.
+
+Table of Contents
+- Quick Start
+- Tech Stack
+- Prerequisites
+- Configuration
+- Features
+- API Endpoints
+- Project Structure
+- Development
+- Database
+- Troubleshooting
+- Contributing
+- Contact
+- License
 
 ## Tech Stack
 
@@ -25,28 +44,26 @@ A full-stack project and task management application with user authentication, b
 
 ## Quick Start
 
-### 1. Clone the Repository
+1. Clone the repository:
 
 ```bash
 git clone <repository-url>
 cd <project-directory>
 ```
 
-### 2. Backend Setup
+2. Backend setup and run:
 
 ```bash
 cd backend
 dotnet restore
+dotnet watch run     # recommended for development (hot reload)
+# or
 dotnet run
 ```
 
-The API will be available at `https://localhost:5001`
+By default the development API runs with HTTPS on `https://localhost:5001` (and HTTP on `http://localhost:5000` if configured). Swagger docs are available at `https://localhost:5001/swagger` when running.
 
-Swagger documentation: `https://localhost:5001/swagger`
-
-### 3. Frontend Setup
-
-Open a new terminal:
+3. Frontend setup and run (in a new terminal):
 
 ```bash
 cd frontend
@@ -54,7 +71,7 @@ npm install
 npm run dev
 ```
 
-The application will be available at `http://localhost:5173`
+The frontend dev server (Vite) usually runs at `http://localhost:5173`.
 
 ## Configuration
 
@@ -75,15 +92,18 @@ Edit `backend/appsettings.json` if needed:
 }
 ```
 
+- The SQLite DB file is created at `backend/projectmanagement.db` on first run.
+- Ensure your JWT key is strong (minimum recommended length is 32 characters).
+
 ### Frontend Configuration
 
-The frontend is pre-configured with `.env`:
+The frontend reads API URL from `.env`:
 
 ```
 VITE_API_URL=https://localhost:5001
 ```
 
-Update this if your backend runs on a different port.
+Update this value if your backend runs on a different port or scheme (http vs https).
 
 ## Features
 
@@ -122,19 +142,19 @@ See `API_TESTING.md` for detailed API testing examples.
 .
 ├── backend/
 │   ├── Controllers/      # API endpoints
-│   ├── Models/          # Database entities
-│   ├── DTOs/            # Data transfer objects
-│   ├── Services/        # Business logic
-│   ├── Data/            # Database context
-│   └── Program.cs       # Application entry point
+│   ├── Models/           # Database entities
+│   ├── DTOs/             # Data transfer objects
+│   ├── Services/         # Business logic
+│   ├── Data/             # Database context
+│   └── Program.cs        # Application entry point
 │
 └── frontend/
     └── src/
-        ├── pages/       # Page components
-        ├── components/  # Reusable components
-        ├── context/     # React context
-        ├── services/    # API service
-        └── types/       # TypeScript types
+        ├── pages/        # Page components
+        ├── components/   # Reusable components
+        ├── context/      # React context
+        ├── services/     # API service
+        └── types/        # TypeScript types
 ```
 
 ## Development
@@ -143,7 +163,7 @@ See `API_TESTING.md` for detailed API testing examples.
 
 ```bash
 cd backend
-dotnet watch run    # Run with hot reload
+dotnet watch run    # Run with hot reload (recommended)
 ```
 
 ### Frontend
@@ -159,15 +179,14 @@ npm run lint        # Run ESLint
 
 The SQLite database is created automatically on first run at `backend/projectmanagement.db`.
 
-To reset the database, simply delete the `.db` file and restart the backend.
+To reset the database, stop the backend, delete the `.db` file, and restart the backend.
 
 ## Troubleshooting
 
-**CORS Issues:** Ensure the frontend URL is listed in the CORS policy in `backend/Program.cs`
+- CORS issues: Ensure the frontend URL is listed in the CORS policy in `backend/Program.cs`.
+- SSL warnings: Development uses a self-signed certificate for HTTPS — accept or trust it for local development.
+- Port conflicts: If ports 5001 (backend HTTPS), 5000 (backend HTTP), or 5173 (frontend) are in use, update config or run on different ports.
 
-**SSL Certificate Warnings:** The backend uses HTTPS in development. Accept the self-signed certificate or configure your browser to trust it.
-
-**Port Conflicts:** If ports 5001 or 5173 are in use, update the configuration files accordingly.
 
 ## License
 
